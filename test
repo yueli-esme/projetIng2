@@ -1,15 +1,4 @@
-hello world
-hello
-test
-<<<<<<< HEAD
-test2
-=======
-nouvelle modification
->>>>>>> 42425752a285580991641a5aa77ef047a0ed24f1
 
-## CODE PYTHON
-
-# Librairies
 import pandas as pd
 
 def dataset_fct(dataset):
