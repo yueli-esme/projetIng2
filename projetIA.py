@@ -41,40 +41,10 @@ def rajouter_colonne_intrusion(df) :
     
     for x in df.Intrusion:
         if df.Label[z] == 'Benign':
-            df.Intrusion[z] = 1
+            df.Intrusion[z] = 0
             
-        elif df.Label[z] == 'DDOS attack-HOIC':
-            df.Intrusion[z] = 2
-            
-        elif df.Label[z] == 'DDOS attack-LOIC-UDP':
-            df.Intrusion[z] = 3
-            
-        elif df.Label[z] == 'FTP-BruteForce':
-            df.Intrusion[z] = 4
-            
-        elif df.Label[z] == 'SSH-Bruteforce':
-            df.Intrusion[z] = 5
-            
-        elif df.Label[z] == 'Brute Force -Web':
-            df.Intrusion[z] = 6
-        
-        elif df.Label[z] == 'Brute Force -XSS ':
-            df.Intrusion[z] = 7
-            
-        elif df.Label[z] == 'SQL Injection':
-            df.Intrusion[z] = 8
-            
-        elif df.Label[z] == 'DoS attacks-GoldenEye':
-            df.Intrusion[z] = 9
-        
-        elif df.Label[z] == 'DoS attacks-Slowloris':
-            df.Intrusion[z] = 10
-            
-        elif df.Label[z] == 'Bot':
-            df.Intrusion[z] = 11
-    
         else :
-            df.Intrusion[z] = 0        
+            df.Intrusion[z] = 1       
         z = z+1
            
 def supprimer_colonne_vide(df) :
@@ -84,7 +54,7 @@ def supprimer_colonne_vide(df) :
             if valeur == 0:
                 compteur +=1
                 
-        if compteur == len(df):
+        if compteur == len(df) or colonne == 'Timestamp' or colonne == 'Label':
             del df[colonne]
 
 
@@ -160,21 +130,3 @@ prof = ProfileReport(df_F_23_copy)
 profile = ProfileReport(df_F_23_copy, minimal=True)
 profile.to_file(output_file="Rapport_df_F_23_copy.html")
 
-
-'''
-#print('Shape de la df:\n',dataFrame.shape)
-
-#print('Nombre de colonnes de la df:\n', dataFrame.columns)
-#print('10 premieres lignes:\n',dataFrame.head(10))
-#print('10 dernieres lignes\n', dataFrame.tail(10))
-'''
-
-
-
-'''
-Etape : 1.Label Intrusion
-        2.Drop labels useless
-        3.
-    
-
-'''
