@@ -75,3 +75,30 @@ MinMaxFeature(df_7_final_normalise_nettoyee)
 
 print('-------Min Max df_7_final_nettoyee')
 MinMaxFeature(df_7_final_nettoyee)
+
+
+
+
+
+
+
+
+
+
+
+
+
+def NormalizeAndClean(dataset) :
+    
+    dataset_features = dataset[liste_features]
+    dataset_normalise = normalize(dataset_features.iloc[:,1:4])
+    dataset_final_normalise = pd.concat([dataset_features.iloc[:,0:1], dataset_normalise, dataset_features.iloc[:,4:]], axis=1)
+    dataset_final_normalise_nettoyee = nettoyage(dataset_final_normalise)
+    dataset_final_normalise_nettoyee.to_csv(r"C:\Users\Charles-Alexandre\Desktop\dataset_features_normalise_nettoye.csv", sep=';')
+    return dataset_final_normalise_nettoyee
+  
+  
+  def nettoyage(dataset):
+    result = dataset.copy()
+    result.fillna(0)
+    return result # rajouter cette ligne a la fonction nettoyage pour que la fonction normalize and clean fonctionne 
