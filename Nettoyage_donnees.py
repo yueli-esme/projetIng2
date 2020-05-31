@@ -77,10 +77,12 @@ print('-------Min Max df_7_final_nettoyee')
 MinMaxFeature(df_7_final_nettoyee)
 
 
+# On regarde pour chaque features de la df le min et max pour savoir lesquels comportent 
+# Des inf
+print('-------Min Max df_initial')
+MinMaxFeature(df_initial)
 
-
-
-
+# Il n'y a que ces deux la qui ont inf : Flow Byts/s ; Flow Pkts/s 
 
 
 
