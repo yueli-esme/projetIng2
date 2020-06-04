@@ -1,0 +1,14 @@
+dataset3['Label'].value_counts() // on compte les differentes valeurs de la colonne label
+
+dataset3intrusion = dataset3[dataset3['Label'] != 'Benign' ] // on crée une dataset intrusion
+dataset3intrusion 
+
+datasetbenign3 = dataset3[dataset3['Label'] == 'Benign' ][0:566] // on crée une dataset benign avec le meme nombre de ligne que la dataset intrusion
+#datasetbenign = datasetbenign.reset_index()
+datasetbenign3
+
+datasetfinal3 = pd.concat([dataset3intrusion,datasetbenign3]) on concate les deux datasets
+datasetfinal3 = datasetfinal3.reset_index(drop = True)
+datasetfinal3
+
+datasetfinal3['Label'].value_counts()
