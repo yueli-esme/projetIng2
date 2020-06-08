@@ -5,17 +5,19 @@
 import pandas as pd
 import numpy as np
 
-df_initial = pd.read_csv("df_W_14_copy.csv", sep=';')
+df_T_15 = pd.read_csv("df_T_15_copy.csv", sep=';')
+df_T_22 = pd.read_csv("df_T_22_copy.csv", sep=';')
+df_W_21 = pd.read_csv("df_W_21_copy.csv", sep=';')
+df_W_14 = pd.read_csv("df_W_14_copy.csv", sep=';')
+df_F_02 = pd.read_csv("df_F_02_copy.csv", sep=';')
+df_F_23 = pd.read_csv("df_F_23_copy.csv", sep=';')
 
-del df_initial['Unnamed: 0']
-
-# On choisit 7 features qu'on met dans une df
-
-liste_features = ['Protocol', 'Flow Duration', 'TotLen Fwd Pkts', 
-                  'TotLen Bwd Pkts',  
-                  'Fwd PSH Flags','Pkt Size Avg','Intrusion']
-
-df_7_features = df_initial[liste_features]
+del df_T_15['Unnamed: 0']
+del df_T_22['Unnamed: 0']
+del df_W_21['Unnamed: 0']
+del df_W_14['Unnamed: 0']
+del df_F_02['Unnamed: 0']
+del df_F_23['Unnamed: 0']
 
 # FONCTIONS 
 def normalize(df):
@@ -29,7 +31,7 @@ def normalize(df):
 
 def nettoyage(df):
     result = df.copy()
-    # On remplace els donnees Nan par O et infinie 
+    # On remplace els donnees Nan par O 
     result.fillna(0)
     
     # On arrondie les nb avec 5 chiffres apreès la virgule
@@ -37,70 +39,53 @@ def nettoyage(df):
         a = np.array((result[colonne]))
         result[colonne] = np.around(a, decimals=5)
     return result
-        
-def MinMaxFeature(df):
-    for feature_name in df.columns:
-            max_value = df[feature_name].max()
-            min_value = df[feature_name].min()
-            print('Feature :', feature_name, '\nMin :', min_value, '\nMax :', max_value)
-            
-
+  
 ''' NORMALISATION + NETTOYAGE '''
-# On ne choisit que celles que l'on veut normaliser
-# Ici on veut normaliser : 'Flow Duration', 'TotLen Fwd Pkts', 'TotLen Bwd Pkts'
-df_7_normalise = normalize(df_7_features.iloc[:,1:4])
 
-# Puis on concatene nos differentes features
-df_7_final_normalise = pd.concat([df_7_features.iloc[:,0:1], df_7_normalise, df_7_features.iloc[:,4:]], axis=1)
+#on ne normalise pas la 1ere et 2eme fature ainsi que la derniere : Dst Port ; Protocol ; Intrusion
+def NormalizeAndClean(dataset) :
 
-# On nettoie nos données de la df
-df_7_final_normalise_nettoyee = nettoyage(df_7_final_normalise)
+    dataset_normalise = normalize(dataset.iloc[:,2:len(dataset)])
+    dataset_final_normalise = pd.concat([dataset.iloc[:,0:2], dataset_normalise, dataset.iloc[:,len(dataset):]], axis=1)
+    dataset_final_normalise_nettoyee = nettoyage(dataset_final_normalise)
+    
+    return dataset_final_normalise_nettoyee
+    
+# on normalise et nettoie toutes nos df
+df_T_15_NN = NormalizeAndClean(df_T_15)
+df_T_22_NN = NormalizeAndClean(df_T_22)
+df_W_21_NN = NormalizeAndClean(df_W_21)
+df_W_14_NN = NormalizeAndClean(df_W_14)
+df_F_02_NN = NormalizeAndClean(df_F_02)
+df_F_23_NN = NormalizeAndClean(df_F_23)
 
-# On met cette dataframe dans un fichier csv pour le conserver et pouvoir le réutiliser par la suite
-# Donc df est nettoyée + normalisée
-df_7_final_normalise_nettoyee.to_csv("df_7_features_normalise_nettoye.csv", sep=';')
+# On enregistre toutes ces dataframes dans de nouveaux fichiers csv pour les conserver
+df_T_15_NN.to_csv("df_T_15_normalise_nettoye.csv", sep=';')
+df_T_22_NN.to_csv("df_T_22_normalise_nettoye.csv", sep=';')
+df_W_21_NN.to_csv("df_W_21_normalise_nettoye.csv", sep=';')
+df_W_14_NN.to_csv("df_W_14_normalise_nettoye.csv", sep=';')
+df_F_02_NN.to_csv("df_F_02_normalise_nettoye.csv", sep=';')
+df_F_23_NN.to_csv("df_F_23_normalise_nettoye.csv", sep=';')
+
+
+
 
 ''' NETTOYAGE SEULEMENT '''
-# On nettoie nos données de la df
-df_7_final_nettoyee = nettoyage(df_7_features)
 
-# On met aussi df non normalisée mais nettoyée dans un fichier csv 
-# car certains modeles de ML ne nécessitent pas forcement une normalisation
-df_7_final_nettoyee.to_csv("df_7_features_nettoye.csv", sep=';')
+# on nettoie toutes nos df
+df_T_15_N = nettoyage(df_T_15)
+df_T_22_N = nettoyage(df_T_22)
+df_W_21_N = nettoyage(df_W_21)
+df_W_14_N = nettoyage(df_W_14)
+df_F_02_N = nettoyage(df_F_02)
+df_F_23_N = nettoyage(df_F_23)
 
-
-# On peut regarder aussi le minimum et maximum de chaque features pour plus tard  
-print('-------Min Max df_7_final_normalise_nettoyee')        
-MinMaxFeature(df_7_final_normalise_nettoyee)
-
-print('-------Min Max df_7_final_nettoyee')
-MinMaxFeature(df_7_final_nettoyee)
-
-
-# On regarde pour chaque features de la df le min et max pour savoir lesquels comportent 
-# Des inf
-print('-------Min Max df_initial')
-MinMaxFeature(df_initial)
-
-# Il n'y a que ces deux la qui ont inf : Flow Byts/s ; Flow Pkts/s 
+# On enregistre toutes ces dataframes dans de nouveaux fichiers csv pour les conserver
+df_T_15_N.to_csv("df_T_15_nettoye.csv", sep=';')
+df_T_22_N.to_csv("df_T_22_nettoye.csv", sep=';')
+df_W_21_N.to_csv("df_W_21_nettoye.csv", sep=';')
+df_W_14_N.to_csv("df_W_14_nettoye.csv", sep=';')
+df_F_02_N.to_csv("df_F_02_nettoye.csv", sep=';')
+df_F_23_N.to_csv("df_F_23_nettoye.csv", sep=';')
 
 
-
-
-
-
-
-def NormalizeAndClean(dataset) :
-    
-    dataset_features = dataset[liste_features]
-    dataset_normalise = normalize(dataset_features.iloc[:,1:4])
-    dataset_final_normalise = pd.concat([dataset_features.iloc[:,0:1], dataset_normalise, dataset_features.iloc[:,4:]], axis=1)
-    dataset_final_normalise_nettoyee = nettoyage(dataset_final_normalise)
-    dataset_final_normalise_nettoyee.to_csv(r"C:\Users\Charles-Alexandre\Desktop\dataset_features_normalise_nettoye.csv", sep=';')
-    return dataset_final_normalise_nettoyee
-  
-  
-def nettoyage(dataset):
-    result = dataset.copy()
-    result.fillna(0)
-    return result # rajouter cette ligne a la fonction nettoyage pour que la fonction normalize and clean fonctionne 
