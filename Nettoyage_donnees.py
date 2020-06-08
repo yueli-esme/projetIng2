@@ -100,7 +100,7 @@ def NormalizeAndClean(dataset) :
     return dataset_final_normalise_nettoyee
   
   
-  def nettoyage(dataset):
+def nettoyage(dataset):
     result = dataset.copy()
     result.fillna(0)
     return result # rajouter cette ligne a la fonction nettoyage pour que la fonction normalize and clean fonctionne 
