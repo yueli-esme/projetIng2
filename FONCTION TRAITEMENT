@@ -1,0 +1,84 @@
+def AttackAndBenign(dataset):
+    
+    datasetbot = dataset[dataset['Label'] != 'Benign' ]
+    datasetbot = datasetbot.reset_index()
+    nb_Attack = len(datasetbot)
+    print('il y a ' + str(nb_Attack) +  ' attaques')
+    
+    datasetbenign = dataset[dataset['Label'] == 'Benign' ]
+    datasetbenign = datasetbenign.reset_index()
+    nb_benign = len(datasetbenign)
+    print('il y a ' + str(nb_benign) +  ' cas benign')
+    
+    if nb_Attack < nb_benign :
+            datasetbenign = datasetbenign[0:len(datasetbot)]
+            
+    if nb_Attack > nb_benign :
+            datasetbot = datasetbot[0:len(datasetbenign)]
+              
+              
+    
+    datasetfinal = pd.concat([datasetbot,datasetbenign])
+    datasetfinal = datasetfinal.reset_index(drop = True)
+    
+    print(datasetfinal['Label'].value_counts())
+              
+    return datasetfinal    
+    
+    
+    
+    
+    
+    
+    def NormalizeAndClean(dataset) :
+    
+    #dataset_features = dataset[liste_features]
+    dataset_normalise = normalize(dataset.iloc[:,2:len(dataset)])
+    dataset_final_normalise = pd.concat([dataset.iloc[:,0:2], dataset_normalise, dataset.iloc[:,len(dataset):]], axis=1)
+    dataset_final_normalise_nettoyee = nettoyage(dataset_final_normalise)
+    dataset_final_normalise_nettoyee.to_csv(r"C:\Users\Charles-Alexandre\Desktop\dataset_features_normalise_nettoye.csv", sep=';')
+    return dataset_final_normalise_nettoyee
+    
+    
+    
+    
+    
+    def nettoyage(dataset):
+    result = dataset.copy()
+    result.fillna(0)
+    return result
+    
+    
+    
+    def normalize(dataset):
+    result = dataset.copy()
+    for feature_name in dataset.columns:
+        max_value = dataset[feature_name].max()
+        min_value = dataset[feature_name].min()
+        result[feature_name] = (dataset[feature_name] - min_value) / (max_value - min_value)
+    return result
+    
+    
+            
+            
+    def colonne_types(dataset):
+    types = {}    
+    for colonne in dataset.columns:
+        types.update({'Nom colonne':colonne, 'Types' : dataset[colonne].dtypes})
+        print(types) 
+               
+               
+               
+    def remove_columns(dataset):
+    
+    dataset.drop(['Bwd PSH Flags', 'Fwd URG Flags','Bwd URG Flags','CWE Flag Count','Fwd Byts/b Avg','Fwd Pkts/b Avg',
+                  'Fwd Blk Rate Avg','Bwd Byts/b Avg','Bwd Pkts/b Avg','Bwd Blk Rate Avg'], axis='columns', inplace=True)
+                  
+                  
+                  
+   
+def MinMaxFeature(df):
+    for feature_name in df.columns:
+            max_value = df[feature_name].max()
+            min_value = df[feature_name].min()
+            print('Feature :', feature_name, '\nMin :', min_value, '\nMax :', max_value)
