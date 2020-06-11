@@ -50,12 +50,14 @@ def AttackAndBenign(dataset):
     
     
     
-    def normalize(dataset):
+def normalize(dataset):
     result = dataset.copy()
     for feature_name in dataset.columns:
-        max_value = dataset[feature_name].max()
-        min_value = dataset[feature_name].min()
-        result[feature_name] = (dataset[feature_name] - min_value) / (max_value - min_value)
+        
+        if feature_name != 'Label' and feature_name != 'Intrusion' and feature_name != 'Dst Port':
+            max_value = dataset[feature_name].max()
+            min_value = dataset[feature_name].min()
+            result[feature_name] = (dataset[feature_name] - min_value) / (max_value - min_value)
     return result
     
     
