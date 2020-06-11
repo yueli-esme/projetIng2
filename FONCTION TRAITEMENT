@@ -82,3 +82,18 @@ def MinMaxFeature(df):
             max_value = df[feature_name].max()
             min_value = df[feature_name].min()
             print('Feature :', feature_name, '\nMin :', min_value, '\nMax :', max_value)
+            
+            
+
+
+
+def rajouter_colonne_intrusion(dataset) :
+    
+    dataset['Intrusion'] = 0
+    z = 0 
+    for x in dataset.Intrusion:
+        if dataset.Label[z] == 'Benign':
+            dataset.Intrusion[z] = 0
+        else :
+            dataset.Intrusion[z] = 1        
+        z = z+1
