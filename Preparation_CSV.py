@@ -86,7 +86,7 @@ def equilibrage_donnees(df):
 def nettoyage(df):
     result = df.copy()
     # On remplace els donnees Nan par O 
-    result.fillna(0)
+    result.fillna(0, inplace=True)
     
     # On arrondie les nb avec 5 chiffres apreès la virgule
     for colonne in result.columns:
