@@ -11,6 +11,8 @@ import Preparation_CSV as pc
 import feature_importances_ as fi
 import Correlation as cor
 import Normalisation_donnees as nor
+import VotingClassifier as vc
+import BaggingClassifier as bc
 
 df_T_15 = pd.read_csv("Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv")
 df_T_22 = pd.read_csv("Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv")
@@ -59,3 +61,12 @@ df_correle.to_csv("total_dataset_correles.csv", sep=';', index = False)
 df_normalise = nor.NormalizeDf(df_correle)
 df_normalise = df_normalise.reset_index(drop = True)
 df_normalise.to_csv("total_dataset_normalise.csv", sep=';', index = False)
+
+
+# On appelle nos modeles de ML
+
+# Voting Classifier
+vc.VotingClass(df_normalise)
+
+# Bagging Classifier
+bc.BaggingClass(df_normalise)
