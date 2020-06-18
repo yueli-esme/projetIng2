@@ -9,7 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import VotingClassifier
 
-def VotinClass(df):
+def VotingClass(df):
     SEED = 1
     
     # On crée 2 tableaux X et y : X contient les caractéristiques de df et y est la variable cible
