@@ -19,7 +19,7 @@ def Correlation(df):
     df_copy = df.copy()
     
     for i in range(0,len(df_corr)):
-        if (df_corr.iloc[i]['Intrusion'] < 0.2) and (df_corr.iloc[i]['Intrusion'] > -0.2):
+        if (df_corr.iloc[i]['Intrusion'] < 0.7) and (df_corr.iloc[i]['Intrusion'] > -0.7):
             print(df_corr.iloc[i])
             del df_copy[df_corr.iloc[i].name]
     
