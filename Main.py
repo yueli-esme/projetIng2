@@ -9,10 +9,9 @@ import pandas as pd
 
 import Preparation_CSV as pc        
 import feature_importances_ as fi
-import Correlation as cor
 import Normalisation_donnees as nor
-import VotingClassifier as vc
 import BaggingClassifier as bc
+import Modeles_ML as ml
 
 df_T_15 = pd.read_csv("Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv")
 df_T_22 = pd.read_csv("Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv")
@@ -51,22 +50,22 @@ df_features_importances = fi.FeaturesImportances(dataset)
 df_features_importances = df_features_importances.reset_index(drop = True)
 df_features_importances.to_csv("total_dataset_Features_importances.csv", sep=';', index = False)
 
-# Correlation
-df_correle = cor.Correlation(df_features_importances)
-df_correle = df_correle.reset_index(drop = True)
-df_correle.to_csv("total_dataset_correles.csv", sep=';', index = False)
-
-
 # Normalisation des donnees
-df_normalise = nor.NormalizeDf(df_correle)
+df_normalise = nor.NormalizeDataset(df_features_importances)
 df_normalise = df_normalise.reset_index(drop = True)
 df_normalise.to_csv("total_dataset_normalise.csv", sep=';', index = False)
 
 
 # On appelle nos modeles de ML
+# Knn
+knn = ml.knn(df_normalise)
 
-# Voting Classifier
-vc.VotingClass(df_normalise)
+# Random Forest Classifier
+rf = ml.rf(df_normalise)
+
+# Gaussian naive Bayes
+gnb = ml.gnb(df_normalise)
+
 
 # Bagging Classifier
 bc.BaggingClass(df_normalise)
