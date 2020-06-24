@@ -12,8 +12,8 @@ from sklearn.ensemble import RandomForestRegressor
 import matplotlib.pyplot as plt
 
 def FeaturesImportances(df):
-    
-    X = df.drop(['Intrusion','Unnamed: 0'], axis = 1)
+    df.astype(np.float32)
+    X = df.drop(['Intrusion'], axis = 1)
     y = df['Intrusion']
     
     for colonne in X.columns:
