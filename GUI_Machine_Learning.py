@@ -17,7 +17,7 @@ def interface(df):
     layout = []
     layout.append([sg.Text('Veuillez rentrer vos informations :')])
         
-    for i in range(0,len(liste_colonne)):
+    for i in range(0,len(liste_colonne)-1):
         layout.append([sg.Text(liste_colonne[i], size=(16, 1)), sg.InputText(default_text = 0)])
         
     layout.append([sg.Button('Ok'), sg.Button('Cancel')])
@@ -36,7 +36,9 @@ def interface(df):
             X_new.append(values[i])
         print(X_new)
     
-    features = list(df.columns)
+    features=[]
+    for i in range(0,len(liste_colonne)-1):
+        features.append(liste_colonne[i])
 
     df_new = pd.DataFrame([X_new], columns=features)
     df_new.to_csv('df_new.csv', sep=';', index = False)
