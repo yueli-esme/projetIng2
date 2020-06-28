@@ -12,6 +12,7 @@ import feature_importances_ as fi
 import Normalisation_donnees as nor
 import BaggingClassifier as bc
 import Modeles_ML as ml
+import pickle
 
 df_T_15 = pd.read_csv("Thursday-15-02-2018_TrafficForML_CICFlowMeter.csv")
 df_T_22 = pd.read_csv("Thursday-22-02-2018_TrafficForML_CICFlowMeter.csv")
@@ -59,13 +60,18 @@ df_normalise.to_csv("total_dataset_normalise.csv", sep=';', index = False)
 # On appelle nos modeles de ML
 # Knn
 knn = ml.knn(df_normalise)
+filename_knn = 'finalized_model_knn.sav'
+pickle.dump(knn, open(filename_knn, 'wb'))
 
 # Random Forest Classifier
 rf = ml.rf(df_normalise)
+filename_rf= 'finalized_model_rf.sav'
+pickle.dump(rf, open(filename_rf, 'wb'))
 
 # Gaussian naive Bayes
 gnb = ml.gnb(df_normalise)
-
+filename_gnb = 'finalized_model_gnb.sav'
+pickle.dump(knn, open(filename_gnb, 'wb'))
 
 # Bagging Classifier
 bc.BaggingClass(df_normalise)
