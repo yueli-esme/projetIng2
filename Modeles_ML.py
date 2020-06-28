@@ -11,9 +11,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import GaussianNB
+import time
 
 # Knn
 def knn(df):
+    
+    t_debut = time.time()
+    
     X = df.drop(['Intrusion'], axis = 1)
     y = df['Intrusion']
     
@@ -26,6 +30,13 @@ def knn(df):
     y_pred_knn = knn.predict(X_test)
     
     print('Report Knn \n', classification_report(y_test, y_pred_knn))
+    
+    t_fin = time.time()
+    
+    t_total = t_fin - t_debut
+    
+    print("Temps pour Knn (en sec): ", t_total)
+    
     return knn
 
 
@@ -41,6 +52,9 @@ def knnPrediction(df,knn):
 # Random Forest Classifier
 
 def rf(df):
+    
+    t_debut = time.time()
+    
     X = df.drop(['Intrusion'], axis = 1)
     y = df['Intrusion']
     
@@ -52,6 +66,13 @@ def rf(df):
     y_pred_rf = rf.predict(X_test)
     
     print('Report RF \n', classification_report(y_test, y_pred_rf))
+    
+    t_fin = time.time()
+    
+    t_total = t_fin - t_debut
+    
+    print("Temps pour Random Forest (en sec): ", t_total)
+    
     return rf
 
 
@@ -66,6 +87,9 @@ def rfPrediction(df,rf):
 # Gaussian naive Bayes
 
 def gnb(df):
+    
+    t_debut = time.time()
+    
     X = df.drop(['Intrusion'], axis = 1)
     y = df['Intrusion']
     
@@ -78,6 +102,13 @@ def gnb(df):
     y_pred_gnb = gnb.predict(X_test)
     
     print('Report GNB \n', classification_report(y_test, y_pred_gnb))
+    
+    t_fin = time.time()
+    
+    t_total = t_fin - t_debut
+    
+    print("Temps pour Gnb (en sec): ", t_total)
+    
     return gnb
 
 def gnbPrediction(df,gnb):
